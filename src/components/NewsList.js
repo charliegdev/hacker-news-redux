@@ -6,22 +6,29 @@ const NewsList = props => {
   const { list } = props;
 
   return (
-    <ul className="list-group">
-      {list.map(item => {
-        const { title, url, author, num_comments, points, objectID } = item;
-        return (
-          <NewsItem 
-            key={objectID}
-            title={title}
-            url={url}     
-            author={author}
+    <table className="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Comments</th>
+          <th scope="col">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        {list.map(item => {
+          const { title, url, author, num_comments, points, objectID } = item;
+          return <NewsItem 
+            key={objectID} 
+            title={title} 
+            url={url} 
+            author={author} 
             num_comments={num_comments} 
-            points={points}
-            objectID={objectID}
+            points={points} 
           />
-        );
-      })}
-    </ul>
+        })}
+      </tbody>
+    </table>
   )
 }
 

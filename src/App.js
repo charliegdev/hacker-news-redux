@@ -12,7 +12,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <br />
         <h1 className="text-center">Hacker News Redux</h1>
+        <br />
         <NewsList list={list} />
       </div>
     );

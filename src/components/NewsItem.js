@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 const NewsItem = props => {
-  const { title, url, author, num_comments, points, objectID } = props;
+  const { title, url, author, num_comments, points } = props;
   return (
-    <li className="list-group-item">
-      <span><a href={url}>{title}</a></span> by <span>{author}</span>&nbsp;
-      <span>{num_comments}</span>&nbsp;
-      <span>{points}</span>&nbsp;
-    </li>
+    <tr>
+      <th scope="row"><a href={url}>{title}</a></th> 
+      <td>{author}</td>
+      <td>{num_comments}</td>
+      <td>{points}</td>
+    </tr>
   );
 };
 
@@ -17,8 +18,7 @@ NewsItem.propTypes = {
   url: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   num_comments: PropTypes.number.isRequired,
-  points: PropTypes.number.isRequired,
-  objectID: PropTypes.number.isRequired,
+  points: PropTypes.number.isRequired
 };
 
 export default NewsItem;
