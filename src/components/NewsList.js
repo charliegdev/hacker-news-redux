@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import NewsItem from "./NewsItem";
 
 const NewsList = props => {
-  const { list } = props;
+  const { list, deleteFunc } = props;
 
   return (
     <table className="table table-dark">
@@ -13,6 +13,7 @@ const NewsList = props => {
           <th scope="col">Author</th>
           <th scope="col">Comments</th>
           <th scope="col">Points</th>
+          <th scope="col">Operation</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,8 @@ const NewsList = props => {
             author={author} 
             num_comments={num_comments} 
             points={points} 
+            objectID={objectID}
+            deleteFunc={deleteFunc}
           />
         })}
       </tbody>
@@ -33,7 +36,8 @@ const NewsList = props => {
 }
 
 NewsList.propTypes = {
-  list: PropTypes.array.isRequired
+  list: PropTypes.array.isRequired,
+  deleteFunc: PropTypes.func.isRequired
 };
 
 export default NewsList;

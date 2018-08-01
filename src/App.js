@@ -8,14 +8,22 @@ class App extends Component {
     this.state = {
       list
     };
+    this.onDelete = this.onDelete.bind(this);
   }
+
+  onDelete(objectID) {
+    const { list } = this.state;
+    const newList = list.filter(item => item.objectID !== objectID);
+    this.setState({list: newList});
+  }
+
   render() {
     return (
       <div className="App">
         <br />
         <h1 className="text-center">Hacker News Redux</h1>
         <br />
-        <NewsList list={list} />
+        <NewsList list={this.state.list} deleteFunc={this.onDelete} />
       </div>
     );
   }
