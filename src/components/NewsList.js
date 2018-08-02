@@ -6,8 +6,8 @@ const NewsList = props => {
   const { list, deleteFunc } = props;
 
   return (
-    <table className="table table-dark">
-      <thead>
+    <table className="table table-bordered table-hover table-sm">
+      <thead className="thead-dark">
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Author</th>
