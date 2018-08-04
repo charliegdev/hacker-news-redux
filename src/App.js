@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-import list from "./components/local-data";
 import NewsList from "./components/NewsList";
 import SearchField from "./components/SearchField";
+import axios from "axios";
+
+// Constants for network querying. Probably should put them in another file.
+const DEFAULT_QUERY = "redux";
+const PATH_BASE = "https://hn.algolia.com/api/v1";
+const PATH_SEARCH = "/search";
+const PARAM_SEARCH = "query=";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list, // actual list. Affected by deletion.
-      displayedList: list // displayed list. Affected by searching and deletion.
+      list : undefined, // actual list. Affected by deletion.
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -40,7 +45,16 @@ class App extends Component {
     event.preventDefault();
   }
 
+  componentDidMount() {
+    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`;
+    axios.get(url)
+     .then(response => this.setState({ list: response.data }))
+     .catch(error => console.log(error));
+  }
+
   render() {
+    const { list } = this.state;
+    if (!list) return null;
     return (
       <div className="App">
         <br />
@@ -49,8 +63,11 @@ class App extends Component {
         <SearchField
           onSubmitFunc={this.onSearchComplete}
           onChangeFunc={this.onSearchUpdate}
-        />
-        <NewsList list={this.state.displayedList} deleteFunc={this.onDelete} />
+        >
+          Search for an article
+        </SearchField>
+        
+        <NewsList list={this.state.list.hits} deleteFunc={this.onDelete} />
       </div>
     );
   }

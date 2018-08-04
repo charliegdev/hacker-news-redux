@@ -17,7 +17,7 @@ class SearchField extends Component {
   }
 
   render() {
-    const { onSubmitFunc } = this.props;
+    const { onSubmitFunc, children } = this.props;
     return (
       <div>
         <p>
@@ -29,7 +29,7 @@ class SearchField extends Component {
             aria-expanded="false"
             aria-controls="collapseExample"
           >
-            Search
+            {children}
           </button>
         </p>
         <div className="collapse" id="collapseExample">
