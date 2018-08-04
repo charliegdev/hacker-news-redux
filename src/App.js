@@ -13,7 +13,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list : undefined, // actual list. Affected by deletion.
+      list: undefined, // actual list. Affected by deletion.
+      query: DEFAULT_QUERY
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -21,39 +22,38 @@ class App extends Component {
   }
 
   onDelete(objectID) {
-    const { list, displayedList } = this.state;
-    const matchObjectID = item => item.objectID !== objectID;
+    const { list } = this.state;
+    const { hits } = list;
 
-    const remainingList = list.filter(matchObjectID);
-    const remainingDisplayedList = displayedList.filter(matchObjectID);
+    const remainingHits = hits.filter(item => item.objectID !== objectID);
+    const remainingList = { ...list, hits: remainingHits };
 
-    this.setState({ 
-      list: remainingList,
-      displayedList: remainingDisplayedList
-    });
+    this.setState({ list: remainingList });
   }
 
   onSearchUpdate(newSearchValue) {
-    const filteredList = this.state.list.filter(item =>
-      item.title.toLowerCase().includes(newSearchValue.toLowerCase())
-    );
-    this.setState({ displayedList: filteredList });
+    this.setState({ query: newSearchValue });
   }
 
   onSearchComplete(event) {
     // currently we don't need to do anything.
     event.preventDefault();
+    this.searchNews();
+  }
+
+  searchNews() {
+    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${this.state.query}`;
+    axios.get(url)
+      .then(response => this.setState({ list: response.data }))
+      .catch(error => console.error("network error."));
   }
 
   componentDidMount() {
-    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`;
-    axios.get(url)
-     .then(response => this.setState({ list: response.data }))
-     .catch(error => console.log(error));
+    this.searchNews();
   }
 
   render() {
-    const { list } = this.state;
+    const { list, query } = this.state;
     if (!list) return null;
     return (
       <div className="App">
@@ -63,10 +63,11 @@ class App extends Component {
         <SearchField
           onSubmitFunc={this.onSearchComplete}
           onChangeFunc={this.onSearchUpdate}
+          searchValue={query}
         >
           Search for an article
         </SearchField>
-        
+
         <NewsList list={this.state.list.hits} deleteFunc={this.onDelete} />
       </div>
     );

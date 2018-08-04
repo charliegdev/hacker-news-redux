@@ -14,7 +14,7 @@ const NewsItem = ({ title, url, author, num_comments, points, deleteFunc, object
 
 NewsItem.propTypes = {
   title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   author: PropTypes.string.isRequired,
   num_comments: PropTypes.number.isRequired,
   points: PropTypes.number.isRequired,
