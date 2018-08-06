@@ -14,11 +14,13 @@ class App extends Component {
     super(props);
     this.state = {
       list: undefined, // actual list. Affected by deletion.
-      query: DEFAULT_QUERY
+      query: DEFAULT_QUERY,
+      page: 0
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
     this.onSearchUpdate = this.onSearchUpdate.bind(this);
+    this.loadNextPage = this.loadNextPage.bind(this);
   }
 
   onDelete(objectID) {
@@ -36,16 +38,21 @@ class App extends Component {
   }
 
   onSearchComplete(event) {
-    // currently we don't need to do anything.
     event.preventDefault();
     this.searchNews();
   }
 
   searchNews() {
-    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${this.state.query}`;
+    const { query, page } = this.state;
+    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&page=${page}`;
     axios.get(url)
       .then(response => this.setState({ list: response.data }))
       .catch(error => console.error("network error."));
+  }
+
+  loadNextPage() {
+    const nextPage = this.state.page + 1;
+    this.setState({ page: nextPage }, this.searchNews);
   }
 
   componentDidMount() {
@@ -54,7 +61,6 @@ class App extends Component {
 
   render() {
     const { list, query } = this.state;
-    if (!list) return null;
     return (
       <div className="App">
         <br />
@@ -68,7 +74,10 @@ class App extends Component {
           Search for an article
         </SearchField>
 
-        <NewsList list={this.state.list.hits} deleteFunc={this.onDelete} />
+        {list && <NewsList list={this.state.list.hits} deleteFunc={this.onDelete} />}
+        {list && <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>}
+        <br />
+        <br />
       </div>
     );
   }
