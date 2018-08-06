@@ -43,10 +43,14 @@ class App extends Component {
   }
 
   searchNews() {
-    const { query, page } = this.state;
+    const { query, page, list } = this.state;
     const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&page=${page}`;
     axios.get(url)
-      .then(response => this.setState({ list: response.data }))
+      .then(response => {
+        const oldHits = page === 0 ? [] : list.hits;
+        const newHits = [...oldHits, ...response.data.hits];
+        this.setState({ list: { hits: newHits, page }});
+      })
       .catch(error => console.error("network error."));
   }
 
