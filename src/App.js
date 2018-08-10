@@ -14,8 +14,8 @@ class App extends Component {
     super(props);
     this.state = {
       list: undefined, // actual list. Affected by deletion.
-      query: DEFAULT_QUERY,
-      page: 0
+      query: DEFAULT_QUERY, // this gets updated every time user types something in the search field
+      finalQuery: DEFAULT_QUERY // this gets sent to the API server.
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -43,20 +43,48 @@ class App extends Component {
   }
 
   searchNews() {
-    const { query, page, list } = this.state;
-    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&page=${page}`;
-    axios.get(url)
-      .then(response => {
-        const oldHits = page === 0 ? [] : list.hits;
-        const newHits = [...oldHits, ...response.data.hits];
-        this.setState({ list: { hits: newHits, page }});
-      })
-      .catch(error => console.error("network error."));
+    const searchUsingKeyword = () => {
+      const { finalQuery, list } = this.state;
+      // Already cached. Don't search.
+      if (list && list[finalQuery]) return;
+
+      // Didn't cache. Search.
+      const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${finalQuery}`;
+      axios
+        .get(url)
+        .then(response => {
+          this.setState({ list: { 
+            ...list,
+            [finalQuery]: { 
+              hits: response.data.hits, 
+              page: 0 // If this is a new search, page must be 0.
+            } 
+          }});
+        })
+        .catch(error => console.error("network error."));
+    };
+
+    this.setState({ finalQuery: this.state.query.toLowerCase() }, searchUsingKeyword);
   }
 
   loadNextPage() {
-    const nextPage = this.state.page + 1;
-    this.setState({ page: nextPage }, this.searchNews);
+    const { list, finalQuery } = this.state;
+    const oldHits = list[finalQuery].hits;
+    const nextPage = list[finalQuery].page + 1;
+
+    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${finalQuery}&page=${nextPage}`;
+    axios
+      .get(url)
+      .then(response => {
+        this.setState({ list: { 
+          ...list,
+          [finalQuery]: { 
+            hits: [...oldHits, ...response.data.hits],
+            page: nextPage // If this is a new search, page must be 0.
+          } 
+        }});
+      })
+      .catch(error => console.error(error));
   }
 
   componentDidMount() {
@@ -64,7 +92,7 @@ class App extends Component {
   }
 
   render() {
-    const { list, query } = this.state;
+    const { list, query, finalQuery } = this.state;
     return (
       <div className="App">
         <br />
@@ -78,8 +106,16 @@ class App extends Component {
           Search for an article
         </SearchField>
 
-        {list && <NewsList list={this.state.list.hits} deleteFunc={this.onDelete} />}
-        {list && <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>}
+        {list &&
+          list[finalQuery] && (
+            <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
+          )}
+        {list &&
+          list[finalQuery] && (
+            <button className="btn btn-success" onClick={this.loadNextPage}>
+              More!
+            </button>
+          )}
         <br />
         <br />
       </div>
