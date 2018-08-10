@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       list: undefined, // actual list. Affected by deletion.
       query: DEFAULT_QUERY, // this gets updated every time user types something in the search field
-      finalQuery: DEFAULT_QUERY // this gets sent to the API server.
+      finalQuery: DEFAULT_QUERY // this gets sent to the API server. The current keyword.
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -24,13 +24,20 @@ class App extends Component {
   }
 
   onDelete(objectID) {
-    const { list } = this.state;
-    const { hits } = list;
+    const { list, finalQuery } = this.state;
+    const { hits, page } = list[finalQuery];
 
     const remainingHits = hits.filter(item => item.objectID !== objectID);
-    const remainingList = { ...list, hits: remainingHits };
 
-    this.setState({ list: remainingList });
+    this.setState({
+      list: {
+        ...list,
+        [finalQuery]: {
+          hits: remainingHits,
+          page
+        }
+      }
+    });
   }
 
   onSearchUpdate(newSearchValue) {
@@ -53,18 +60,23 @@ class App extends Component {
       axios
         .get(url)
         .then(response => {
-          this.setState({ list: { 
-            ...list,
-            [finalQuery]: { 
-              hits: response.data.hits, 
-              page: 0 // If this is a new search, page must be 0.
-            } 
-          }});
+          this.setState({
+            list: {
+              ...list,
+              [finalQuery]: {
+                hits: response.data.hits,
+                page: 0 // If this is a new search, page must be 0.
+              }
+            }
+          });
         })
         .catch(error => console.error("network error."));
     };
 
-    this.setState({ finalQuery: this.state.query.toLowerCase() }, searchUsingKeyword);
+    this.setState(
+      { finalQuery: this.state.query.toLowerCase() },
+      searchUsingKeyword
+    );
   }
 
   loadNextPage() {
@@ -76,13 +88,15 @@ class App extends Component {
     axios
       .get(url)
       .then(response => {
-        this.setState({ list: { 
-          ...list,
-          [finalQuery]: { 
-            hits: [...oldHits, ...response.data.hits],
-            page: nextPage // If this is a new search, page must be 0.
-          } 
-        }});
+        this.setState({
+          list: {
+            ...list,
+            [finalQuery]: {
+              hits: [...oldHits, ...response.data.hits],
+              page: nextPage // If this is a new search, page must be 0.
+            }
+          }
+        });
       })
       .catch(error => console.error(error));
   }
