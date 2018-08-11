@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import NewsItem from "./NewsItem";
+import NewsItem from "../NewsItem/NewsItem";
 
 const NewsList = ({ list, deleteFunc }) => 
   <table className="table table-bordered table-hover table-sm">

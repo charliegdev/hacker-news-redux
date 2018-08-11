@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import NewsList from "./components/NewsList";
-import SearchField from "./components/SearchField";
+import NewsList from "./components/NewsList/NewsList";
+import SearchField from "./components/SearchField/SearchField";
 import axios from "axios";
 
 // Constants for network querying. Probably should put them in another file.
@@ -10,12 +10,15 @@ const PATH_SEARCH = "/search";
 const PARAM_SEARCH = "query=";
 
 class App extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
       list: undefined, // actual list. Affected by deletion.
       query: DEFAULT_QUERY, // this gets updated every time user types something in the search field
-      finalQuery: DEFAULT_QUERY // this gets sent to the API server. The current keyword.
+      finalQuery: DEFAULT_QUERY, // this gets sent to the API server. The current keyword.
+      error: null
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -60,6 +63,7 @@ class App extends Component {
       axios
         .get(url)
         .then(response => {
+          this._isMounted && 
           this.setState({
             list: {
               ...list,
@@ -70,7 +74,7 @@ class App extends Component {
             }
           });
         })
-        .catch(error => console.error("network error."));
+        .catch(error => this._isMounted && this.setState({ error }));
     };
 
     this.setState(
@@ -88,6 +92,7 @@ class App extends Component {
     axios
       .get(url)
       .then(response => {
+        this._isMounted && 
         this.setState({
           list: {
             ...list,
@@ -98,15 +103,20 @@ class App extends Component {
           }
         });
       })
-      .catch(error => console.error(error));
+      .catch(error => this._isMounted && this.setState({ error }));
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.searchNews();
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
-    const { list, query, finalQuery } = this.state;
+    const { list, query, finalQuery, error } = this.state;
     return (
       <div className="App">
         <br />
@@ -120,16 +130,13 @@ class App extends Component {
           Search for an article
         </SearchField>
 
-        {list &&
-          list[finalQuery] && (
-            <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
-          )}
-        {list &&
-          list[finalQuery] && (
-            <button className="btn btn-success" onClick={this.loadNextPage}>
-              More!
-            </button>
-          )}
+        {error && <p>Oops! Something went wrong.</p>}
+        {list && list[finalQuery] && (
+          <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
+        )}
+        {list && list[finalQuery] && (
+          <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>
+        )}
         <br />
         <br />
       </div>
