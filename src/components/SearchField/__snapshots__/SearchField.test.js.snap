@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchField has a valid snapshot 1`] = `
+<div>
+  <p>
+    <button
+      aria-controls="collapseExample"
+      aria-expanded="false"
+      className="btn btn-primary"
+      data-target="#collapseExample"
+      data-toggle="collapse"
+      type="button"
+    >
+      Search for Something
+    </button>
+  </p>
+  <div
+    className="collapse"
+    id="collapseExample"
+  >
+    <div
+      className="card card-body"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="searchField"
+          >
+            Search a Title
+          </label>
+          <input
+            className="form-control"
+            id="searchField"
+            onChange={[Function]}
+            placeholder="Enter part of a title"
+            type="text"
+            value="mock search value"
+          />
+          <small
+            className="form-text text-muted"
+            id="searchFieldHelp"
+          >
+            Searching for remote news
+          </small>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br />
+</div>
+`;

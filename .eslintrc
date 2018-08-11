@@ -6,7 +6,8 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:jest/recommended"
     ],
     "parser": "babel-eslint",
     "parserOptions": {
@@ -17,7 +18,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react", 
+        "jest"
     ],
     "rules": {
         "strict": 0,
