@@ -88,6 +88,7 @@ class App extends Component {
   }
 
   loadNextPage() {
+    this.setState({ loading: true });
     const { list, finalQuery } = this.state;
     const oldHits = list[finalQuery].hits;
     const nextPage = list[finalQuery].page + 1;
@@ -104,7 +105,8 @@ class App extends Component {
               hits: [...oldHits, ...response.data.hits],
               page: nextPage // If this is a new search, page must be 0.
             }
-          }
+          },
+          loading: false
         });
       })
       .catch(error => this._isMounted && this.setState({ error }));
@@ -135,14 +137,13 @@ class App extends Component {
         </SearchField>
 
         {error && <p>Oops! Something went wrong.</p>}
-        {}
-        {list && list[finalQuery] && (
-          <div>
-            <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
-            <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>
-          </div>
-        )}
-        {loading && <Loading />}
+        {list && list[finalQuery] && 
+          <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
+        }
+        {loading ? 
+          <Loading /> :
+          <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>
+        }
         <br />
         <br />
       </div>
