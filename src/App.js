@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import axios from "axios";
 import NewsList from "./components/NewsList/NewsList";
 import SearchField from "./components/SearchField/SearchField";
-import axios from "axios";
+import Loading from "./components/Loading/Loading";
+
 
 // Constants for network querying. Probably should put them in another file.
 const DEFAULT_QUERY = "redux";
@@ -18,7 +20,8 @@ class App extends Component {
       list: undefined, // actual list. Affected by deletion.
       query: DEFAULT_QUERY, // this gets updated every time user types something in the search field
       finalQuery: DEFAULT_QUERY, // this gets sent to the API server. The current keyword.
-      error: null
+      error: null,
+      loading: false
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -71,16 +74,17 @@ class App extends Component {
                 hits: response.data.hits,
                 page: 0 // If this is a new search, page must be 0.
               }
-            }
+            },
+            loading: false
           });
         })
         .catch(error => this._isMounted && this.setState({ error }));
     };
 
-    this.setState(
-      { finalQuery: this.state.query.toLowerCase() },
-      searchUsingKeyword
-    );
+    this.setState({ 
+      finalQuery: this.state.query.toLowerCase(), 
+      loading: true
+    }, searchUsingKeyword);
   }
 
   loadNextPage() {
@@ -116,7 +120,7 @@ class App extends Component {
   }
 
   render() {
-    const { list, query, finalQuery, error } = this.state;
+    const { list, query, finalQuery, error, loading } = this.state;
     return (
       <div className="App">
         <br />
@@ -131,12 +135,14 @@ class App extends Component {
         </SearchField>
 
         {error && <p>Oops! Something went wrong.</p>}
+        {}
         {list && list[finalQuery] && (
-          <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
+          <div>
+            <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
+            <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>
+          </div>
         )}
-        {list && list[finalQuery] && (
-          <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>
-        )}
+        {loading && <Loading />}
         <br />
         <br />
       </div>

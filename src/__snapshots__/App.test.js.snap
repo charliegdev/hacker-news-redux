@@ -55,6 +55,12 @@ exports[`App has a valid snapshot 1`] = `
     </div>
     <br />
   </div>
+  <div
+    className="alert alert-info"
+    role="alert"
+  >
+    Loading...
+  </div>
   <br />
   <br />
 </div>
