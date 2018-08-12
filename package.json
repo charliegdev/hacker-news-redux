@@ -16,7 +16,10 @@
   },
   "devDependencies": {
     "ajv": "^6.5.2",
+    "enzyme": "^3.4.1",
+    "enzyme-adapter-react-16": "^1.2.0",
     "eslint-plugin-jest": "^21.20.2",
+    "react-addons-test-utils": "^15.6.2",
     "react-is": "^16.4.2",
     "react-test-renderer": "^16.4.2"
   }

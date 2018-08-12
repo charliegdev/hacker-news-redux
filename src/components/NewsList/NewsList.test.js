@@ -1,7 +1,11 @@
 import React from "React";
 import ReactDOM from "react-dom";
 import renderer from "react-test-renderer";
+import Enzyme, { shallow, render } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import NewsList from "./NewsList";
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe("NewsList", () => {
   const mockFunc = () => "mockFunc";
@@ -13,16 +17,21 @@ describe("NewsList", () => {
     deleteFunc: mockFunc
   }
 
-  const mockNewsList = <NewsList {...props} />;
+  const newsList = <NewsList {...props} />;
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(mockNewsList, div);
+    ReactDOM.render(newsList, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   test("has a valid snapshot", () => {
-    const component = renderer.create(mockNewsList);
+    const component = renderer.create(newsList);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
+  });
+
+  it("shows 2 items", () => {
+    const element = render(newsList); // can't use shallow because I need child components to be rendered
+    expect(element.find(".btn-outline-danger")).toHaveLength(2);
   });
 });
