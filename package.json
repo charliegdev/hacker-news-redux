@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "lodash": "^4.17.10",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4"
@@ -19,6 +20,7 @@
     "enzyme": "^3.4.1",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint-plugin-jest": "^21.20.2",
+    "eslint-plugin-lodash-fp": "^2.2.0-a1",
     "react-addons-test-utils": "^15.6.2",
     "react-is": "^16.4.2",
     "react-test-renderer": "^16.4.2"

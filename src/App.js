@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import _ from "lodash/fp";
 import NewsList from "./components/NewsList/NewsList";
 import SearchField from "./components/SearchField/SearchField";
 import Button from "./components/Button/Button";
 import withLoading from "./components/withLoading/withLoading";
-
-
-// Constants for network querying. Probably should put them in another file.
-const DEFAULT_QUERY = "redux";
-const PATH_BASE = "https://hn.algolia.com/api/v1";
-const PATH_SEARCH = "/search";
-const PARAM_SEARCH = "query=";
+import { DEFAULT_QUERY, PATH_BASE, PATH_SEARCH, PARAM_SEARCH, PAGE } from "./utils/network";
 
 const ButtonWithLoading = withLoading(Button);
 
@@ -96,7 +91,7 @@ class App extends Component {
     const oldHits = list[finalQuery].hits;
     const nextPage = list[finalQuery].page + 1;
 
-    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${finalQuery}&page=${nextPage}`;
+    const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${finalQuery}&${PAGE}${nextPage}`;
     axios
       .get(url)
       .then(response => {

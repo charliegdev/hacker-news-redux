@@ -7,7 +7,8 @@
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:jest/recommended"
+        "plugin:jest/recommended",
+        "plugin:lodash-fp/recommended"
     ],
     "parser": "babel-eslint",
     "parserOptions": {
@@ -19,7 +20,8 @@
     },
     "plugins": [
         "react", 
-        "jest"
+        "jest",
+        "lodash-fp"
     ],
     "rules": {
         "strict": 0,
