@@ -14,7 +14,9 @@ describe("NewsList", () => {
       { title: "1", author: "1", num_comments: 1, points: 2, objectID: "abc" },
       { title: "2", author: "2", num_comments: 2, points: 3, objectID: "xyz" },
     ],
-    deleteFunc: mockFunc
+    deleteFunc: mockFunc,
+    sortKey: "none",
+    onSort: mockFunc
   }
 
   const newsList = <NewsList {...props} />;

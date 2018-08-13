@@ -1,4 +1,4 @@
-import { sortBy } from "lodash/fp";
+import { sortBy } from "lodash";
 
 const sort = {
   none: list => list,

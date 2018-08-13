@@ -3,8 +3,7 @@ import axios from "axios";
 import NewsList from "./components/NewsList/NewsList";
 import SearchField from "./components/SearchField/SearchField";
 import Button from "./components/Button/Button";
-import withLoading from "./components/withLoading/withLoading";
-import sort from "./utils/sort";
+import { withLoading } from "./components/HOC/HOC";
 import { DEFAULT_QUERY, PATH_BASE, PATH_SEARCH, PARAM_SEARCH, PAGE } from "./utils/network";
 
 const ButtonWithLoading = withLoading(Button);
@@ -19,12 +18,14 @@ class App extends Component {
       query: DEFAULT_QUERY, // this gets updated every time user types something in the search field
       finalQuery: DEFAULT_QUERY, // this gets sent to the API server. The current keyword.
       error: null,
-      loading: false
+      loading: false,
+      sortKey: "none"
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
     this.onSearchUpdate = this.onSearchUpdate.bind(this);
     this.loadNextPage = this.loadNextPage.bind(this);
+    this.onSort = this.onSort.bind(this);
   }
 
   onDelete(objectID) {
@@ -51,6 +52,10 @@ class App extends Component {
   onSearchComplete(event) {
     event.preventDefault();
     this.searchNews();
+  }
+
+  onSort(sortKey) {
+    this.setState({ sortKey });
   }
 
   searchNews() {
@@ -120,7 +125,7 @@ class App extends Component {
   }
 
   render() {
-    const { list, query, finalQuery, error, loading } = this.state;
+    const { list, query, finalQuery, error, loading, sortKey } = this.state;
     return (
       <div className="App">
         <br />
@@ -136,7 +141,12 @@ class App extends Component {
 
         {error && <p>Oops! Something went wrong.</p>}
         {list && list[finalQuery] && 
-          <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
+          <NewsList 
+            list={list[finalQuery].hits} 
+            deleteFunc={this.onDelete} 
+            sortKey={sortKey}
+            onSort={this.onSort}
+          />
         }
         <ButtonWithLoading loading={loading} semantic="success" onClick={this.loadNextPage}>More!</ButtonWithLoading>
         <br />
