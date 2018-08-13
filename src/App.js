@@ -3,6 +3,7 @@ import axios from "axios";
 import NewsList from "./components/NewsList/NewsList";
 import SearchField from "./components/SearchField/SearchField";
 import Loading from "./components/Loading/Loading";
+import Button from "./components/Button/Button";
 
 
 // Constants for network querying. Probably should put them in another file.
@@ -142,7 +143,7 @@ class App extends Component {
         }
         {loading ? 
           <Loading /> :
-          <button className="btn btn-success" onClick={this.loadNextPage}>More!</button>
+          <Button semantic="success" onClick={this.loadNextPage}>More!</Button>
         }
         <br />
         <br />
@@ -151,4 +152,10 @@ class App extends Component {
   }
 }
 
+const withLoading = Component => ({ loading, ...rest }) => 
+  loading ?
+    <Loading /> :
+    <Component { ...rest } />
+
 export default App;
+
