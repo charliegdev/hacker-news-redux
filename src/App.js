@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import NewsList from "./components/NewsList/NewsList";
 import SearchField from "./components/SearchField/SearchField";
-import Loading from "./components/Loading/Loading";
 import Button from "./components/Button/Button";
+import withLoading from "./components/withLoading/withLoading";
 
 
 // Constants for network querying. Probably should put them in another file.
@@ -11,6 +11,8 @@ const DEFAULT_QUERY = "redux";
 const PATH_BASE = "https://hn.algolia.com/api/v1";
 const PATH_SEARCH = "/search";
 const PARAM_SEARCH = "query=";
+
+const ButtonWithLoading = withLoading(Button);
 
 class App extends Component {
   _isMounted = false;
@@ -141,10 +143,7 @@ class App extends Component {
         {list && list[finalQuery] && 
           <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />
         }
-        {loading ? 
-          <Loading /> :
-          <Button semantic="success" onClick={this.loadNextPage}>More!</Button>
-        }
+        <ButtonWithLoading loading={loading} semantic="success" onClick={this.loadNextPage}>More!</ButtonWithLoading>
         <br />
         <br />
       </div>
@@ -152,10 +151,6 @@ class App extends Component {
   }
 }
 
-const withLoading = Component => ({ loading, ...rest }) => 
-  loading ?
-    <Loading /> :
-    <Component { ...rest } />
 
 export default App;
 
