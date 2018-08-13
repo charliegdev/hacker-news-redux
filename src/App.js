@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
-import _ from "lodash/fp";
 import NewsList from "./components/NewsList/NewsList";
 import SearchField from "./components/SearchField/SearchField";
 import Button from "./components/Button/Button";
 import withLoading from "./components/withLoading/withLoading";
+import sort from "./utils/sort";
 import { DEFAULT_QUERY, PATH_BASE, PATH_SEARCH, PARAM_SEARCH, PAGE } from "./utils/network";
 
 const ButtonWithLoading = withLoading(Button);
