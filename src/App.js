@@ -135,6 +135,7 @@ class App extends Component {
           onSubmitFunc={this.onSearchComplete}
           onChangeFunc={this.onSearchUpdate}
           searchValue={query}
+          loading={loading}
         >
           Search for an article
         </SearchField>

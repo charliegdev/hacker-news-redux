@@ -7,13 +7,13 @@ class SearchField extends Component {
   }
 
   render() {
-    const { onSubmitFunc, onChangeFunc, searchValue, children = "Search for a topic" } = this.props;
+    const { onSubmitFunc, onChangeFunc, searchValue, loading = true, children = "Search for a topic" } = this.props;
     return (
       <div>
         <div className="ui segment">
           <form onSubmit={onSubmitFunc}>
-            <h1 className="ui header left floated">{children}</h1>
-            <div className="ui search">
+            <h3 className="ui header">{children}</h3>
+            <div className={"ui search" + (loading ? " loading" : "")}>
               <div className="ui icon input">
                 <input 
                   className="prompt" 
@@ -39,7 +39,8 @@ SearchField.propTypes = {
   onChangeFunc: PropTypes.func.isRequired,
   onSubmitFunc: PropTypes.func.isRequired,
   searchValue: PropTypes.string.isRequired,
-  children: PropTypes.string
+  children: PropTypes.string,
+  loading: PropTypes.boolean
 };
 
 export default SearchField;
