@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const NewsItem = ({ title, url, author, num_comments, points, deleteFunc, objectID }) =>
   <tr>
-    <th scope="row"><a href={url} target="_blank">{title}</a></th> 
+    <td><a href={url} target="_blank">{title}</a></td> 
     <td>{author}</td>
     <td>{num_comments}</td>
     <td>{points}</td>

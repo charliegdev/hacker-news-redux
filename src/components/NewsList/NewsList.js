@@ -8,14 +8,14 @@ const NewsList = ({ list, deleteFunc, sortKey, onSort }) => {
   const ButtonWithSort = withSort(onSort);
 
   return (
-    <table className="table table-bordered table-hover table-sm">
+    <table className="ui celled striped table">
       <thead className="thead-dark">
         <tr>
-          <th scope="col">Title <ButtonWithSort sortKey="byTitle" /></th>
-          <th scope="col">Author <ButtonWithSort sortKey="byAuthor" /></th>
-          <th scope="col">Comments <ButtonWithSort sortKey="byCommentsDesc" /></th>
-          <th scope="col">Points <ButtonWithSort sortKey="byPointsDesc" /></th>
-          <th scope="col">Operation</th>
+          <th>Title <ButtonWithSort sortKey="byTitle" /></th>
+          <th>Author <ButtonWithSort sortKey="byAuthor" /></th>
+          <th>Comments <ButtonWithSort sortKey="byCommentsDesc" /></th>
+          <th>Points <ButtonWithSort sortKey="byPointsDesc" /></th>
+          <th>Operation</th>
         </tr>
       </thead>
       <tbody>

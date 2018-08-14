@@ -8,8 +8,6 @@ import Sort from "../Sort/Sort";
 const withLoading = Component => ({ loading, ...rest }) => 
   loading ? <Loading /> : <Component { ...rest } />
 
-// <th scope="col">Title <Sort sortKey="byTitle" onSort={onSort}>Sort</Sort></th>
-
 const withSort = onSort => ({ sortKey }) =>
   <Sort sortKey={sortKey} onSort={onSort}>Sort</Sort>
 
