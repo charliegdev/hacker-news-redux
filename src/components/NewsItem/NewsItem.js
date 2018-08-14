@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import Button from "../Button/Button";
 
 const NewsItem = ({ title, url, author, num_comments, points, deleteFunc, objectID }) =>
   <tr>
@@ -8,7 +9,7 @@ const NewsItem = ({ title, url, author, num_comments, points, deleteFunc, object
     <td>{num_comments}</td>
     <td>{points}</td>
     <td>
-      <button type="button" className="btn btn-outline-danger btn-sm" onClick={deleteFunc.bind(undefined, objectID)}>Delete</button>
+      <Button onClick={deleteFunc.bind(undefined, objectID)} semantic="red tiny">Delete</Button>
     </td>
   </tr>
 

@@ -11,10 +11,10 @@ const NewsList = ({ list, deleteFunc, sortKey, onSort }) => {
     <table className="ui celled striped table">
       <thead className="thead-dark">
         <tr>
-          <th>Title <ButtonWithSort sortKey="byTitle" /></th>
-          <th>Author <ButtonWithSort sortKey="byAuthor" /></th>
-          <th>Comments <ButtonWithSort sortKey="byCommentsDesc" /></th>
-          <th>Points <ButtonWithSort sortKey="byPointsDesc" /></th>
+          <th><ButtonWithSort sortKey="byTitle">Title</ButtonWithSort></th>
+          <th><ButtonWithSort sortKey="byAuthor">Author</ButtonWithSort></th>
+          <th><ButtonWithSort sortKey="byCommentsDesc">Comments</ButtonWithSort></th>
+          <th><ButtonWithSort sortKey="byPointsDesc">Points</ButtonWithSort></th>
           <th>Operation</th>
         </tr>
       </thead>

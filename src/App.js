@@ -149,7 +149,7 @@ class App extends Component {
             onSort={this.onSort}
           />
         }
-        <ButtonWithLoading loading={loading} semantic="success" onClick={this.loadNextPage}>More!</ButtonWithLoading>
+        <ButtonWithLoading loading={loading} semantic="green" onClick={this.loadNextPage}>More!</ButtonWithLoading>
         <br />
         <br />
       </div>
