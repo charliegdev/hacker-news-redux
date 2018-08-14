@@ -6,9 +6,21 @@ exports[`App has a valid snapshot 1`] = `
 >
   <br />
   <h1
-    className="ui header center aligned"
+    className="ui header"
   >
-    Hacker News Redux
+    <i
+      className="plug icon"
+    />
+    <div
+      className="content"
+    >
+      Hacker News Redux
+      <div
+        className="sub header"
+      >
+        Remade using React
+      </div>
+    </div>
   </h1>
   <br />
   <div>
@@ -24,7 +36,7 @@ exports[`App has a valid snapshot 1`] = `
           Search for an article
         </h3>
         <div
-          className="ui search"
+          className="ui search loading"
         >
           <div
             className="ui icon input"
@@ -49,10 +61,20 @@ exports[`App has a valid snapshot 1`] = `
     <br />
   </div>
   <div
-    className="alert alert-info"
-    role="alert"
+    className="ui icon message"
   >
-    Loading...
+    <i
+      className="notched circle loading icon"
+    />
+    <div
+      className="content"
+    >
+      <div
+        className="header"
+      >
+        Just one second
+      </div>
+    </div>
   </div>
   <br />
   <br />

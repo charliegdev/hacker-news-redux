@@ -40,7 +40,7 @@ SearchField.propTypes = {
   onSubmitFunc: PropTypes.func.isRequired,
   searchValue: PropTypes.string.isRequired,
   children: PropTypes.string,
-  loading: PropTypes.boolean
+  loading: PropTypes.bool
 };
 
 export default SearchField;

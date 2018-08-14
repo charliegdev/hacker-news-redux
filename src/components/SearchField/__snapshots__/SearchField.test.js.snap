@@ -14,7 +14,7 @@ exports[`SearchField has a valid snapshot 1`] = `
         Search for Something
       </h3>
       <div
-        className="ui search"
+        className="ui search loading"
       >
         <div
           className="ui icon input"
