@@ -7,36 +7,26 @@ class SearchField extends Component {
   }
 
   render() {
-    const { onSubmitFunc, onChangeFunc, searchValue, children = "Search" } = this.props;
+    const { onSubmitFunc, onChangeFunc, searchValue, children = "Search for a topic" } = this.props;
     return (
       <div>
-        <div className="card card-body">
+        <div className="ui segment">
           <form onSubmit={onSubmitFunc}>
-            <div className="form-group">
-              <label htmlFor="searchField">Search a Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="searchField"
-                placeholder="Enter part of a title"
-                value={searchValue}
-                onChange={event => onChangeFunc(event.target.value)}
-                ref={node => this.input = node}
-              />
-              <small id="searchFieldHelp" className="form-text text-muted">
-                Searching for remote news
-              </small>
+            <h1 className="ui header left floated">{children}</h1>
+            <div className="ui search">
+              <div className="ui icon input">
+                <input 
+                  className="prompt" 
+                  placeholder="Search for a title..." 
+                  type="text" 
+                  value={searchValue}
+                  onChange={event => onChangeFunc(event.target.value)}
+                  ref={node => this.input = node}
+                />
+                <i className="search icon"></i>
+              </div>
+              <div className="results"></div>
             </div>
-            <button
-              className="btn btn-primary"
-              type="submit"
-              data-toggle="collapse"
-              data-target="#collapseExample"
-              aria-expanded="false"
-              aria-controls="collapseExample"
-            >
-              {children}
-            </button>
           </form>
         </div>
         <br />

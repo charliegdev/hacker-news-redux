@@ -129,7 +129,7 @@ class App extends Component {
     return (
       <div className="App">
         <br />
-        <h1 className="text-center">Hacker News Redux</h1>
+        <h1 className="ui header center aligned">Hacker News Redux</h1>
         <br />
         <SearchField
           onSubmitFunc={this.onSearchComplete}
