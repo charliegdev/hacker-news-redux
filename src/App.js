@@ -129,12 +129,19 @@ class App extends Component {
     return (
       <div className="App">
         <br />
-        <h1 className="text-center">Hacker News Redux</h1>
+        <h1 className="ui header">
+          <i className="user secret icon huge"></i>
+          <div className="content">
+            Hacker News Redux
+            <div className="sub header">Remade using React</div>
+          </div>
+        </h1>
         <br />
         <SearchField
           onSubmitFunc={this.onSearchComplete}
           onChangeFunc={this.onSearchUpdate}
           searchValue={query}
+          loading={loading}
         >
           Search for an article
         </SearchField>
@@ -148,7 +155,7 @@ class App extends Component {
             onSort={this.onSort}
           />
         }
-        <ButtonWithLoading loading={loading} semantic="success" onClick={this.loadNextPage}>More!</ButtonWithLoading>
+        <ButtonWithLoading loading={loading} semantic="green" onClick={this.loadNextPage}>More!</ButtonWithLoading>
         <br />
         <br />
       </div>
