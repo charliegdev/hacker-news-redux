@@ -5,7 +5,7 @@ import { withSort } from "../HOC/HOC";
 import sort from "../../utils/sort";
 
 const NewsList = ({ list, deleteFunc, sortKey, onSort, isSortReverse }) => {
-  const ButtonWithSort = withSort(onSort);
+  const ButtonWithSort = withSort(onSort, sortKey, isSortReverse);
   const sortedListInProgress = sort[sortKey](list);
   const sortedList = isSortReverse ? sortedListInProgress.reverse() : sortedListInProgress;
 
