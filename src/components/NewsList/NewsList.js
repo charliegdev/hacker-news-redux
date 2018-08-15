@@ -4,8 +4,10 @@ import NewsItem from "../NewsItem/NewsItem";
 import { withSort } from "../HOC/HOC";
 import sort from "../../utils/sort";
 
-const NewsList = ({ list, deleteFunc, sortKey, onSort }) => {
+const NewsList = ({ list, deleteFunc, sortKey, onSort, isSortReverse }) => {
   const ButtonWithSort = withSort(onSort);
+  const sortedListInProgress = sort[sortKey](list);
+  const sortedList = isSortReverse ? sortedListInProgress.reverse() : sortedListInProgress;
 
   return (
     <table className="ui celled striped table">
@@ -19,7 +21,7 @@ const NewsList = ({ list, deleteFunc, sortKey, onSort }) => {
         </tr>
       </thead>
       <tbody>
-        {sort[sortKey](list).map(({ title, url, author, num_comments, points, objectID }) => 
+        {sortedList.map(({ title, url, author, num_comments, points, objectID }) => 
           <NewsItem 
             key={objectID} 
             title={title} 
@@ -40,7 +42,8 @@ NewsList.propTypes = {
   list: PropTypes.array.isRequired,
   deleteFunc: PropTypes.func.isRequired,
   sortKey: PropTypes.string.isRequired,
-  onSort: PropTypes.func.isRequired
+  onSort: PropTypes.func.isRequired,
+  isSortReverse: PropTypes.bool.isRequired
 };
 
 export default NewsList;

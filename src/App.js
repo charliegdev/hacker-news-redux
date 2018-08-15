@@ -19,7 +19,8 @@ class App extends Component {
       finalQuery: DEFAULT_QUERY, // this gets sent to the API server. The current keyword.
       error: null,
       loading: false,
-      sortKey: "none"
+      sortKey: "none",
+      isSortReverse: false
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
@@ -54,8 +55,15 @@ class App extends Component {
     this.searchNews();
   }
 
-  onSort(sortKey) {
-    this.setState({ sortKey });
+  onSort(newSortKey) {
+    const { sortKey, isSortReverse } = this.state;
+    // Only reverse if the same sortKey is chosen again.
+    const reverse = sortKey === newSortKey && !isSortReverse; 
+
+    this.setState({ 
+      sortKey: newSortKey, 
+      isSortReverse: reverse 
+    });
   }
 
   searchNews() {
@@ -125,7 +133,7 @@ class App extends Component {
   }
 
   render() {
-    const { list, query, finalQuery, error, loading, sortKey } = this.state;
+    const { list, query, finalQuery, error, loading, sortKey, isSortReverse } = this.state;
     return (
       <div className="App">
         <br />
@@ -153,6 +161,7 @@ class App extends Component {
             deleteFunc={this.onDelete} 
             sortKey={sortKey}
             onSort={this.onSort}
+            isSortReverse={isSortReverse}
           />
         }
         <ButtonWithLoading loading={loading} semantic="green" onClick={this.loadNextPage}>More!</ButtonWithLoading>
