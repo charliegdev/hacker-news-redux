@@ -18,15 +18,12 @@ class App extends Component {
       query: DEFAULT_QUERY, // this gets updated every time user types something in the search field
       finalQuery: DEFAULT_QUERY, // this gets sent to the API server. The current keyword.
       error: null,
-      loading: false,
-      sortKey: "none",
-      isSortReverse: false
+      loading: false
     };
     this.onDelete = this.onDelete.bind(this);
     this.onSearchComplete = this.onSearchComplete.bind(this);
     this.onSearchUpdate = this.onSearchUpdate.bind(this);
     this.loadNextPage = this.loadNextPage.bind(this);
-    this.onSort = this.onSort.bind(this);
   }
 
   onDelete(objectID) {
@@ -53,17 +50,6 @@ class App extends Component {
   onSearchComplete(event) {
     event.preventDefault();
     this.searchNews();
-  }
-
-  onSort(newSortKey) {
-    const { sortKey, isSortReverse } = this.state;
-    // Only reverse if the same sortKey is chosen again.
-    const reverse = sortKey === newSortKey && !isSortReverse; 
-
-    this.setState({ 
-      sortKey: newSortKey, 
-      isSortReverse: reverse 
-    });
   }
 
   searchNews() {
@@ -133,7 +119,7 @@ class App extends Component {
   }
 
   render() {
-    const { list, query, finalQuery, error, loading, sortKey, isSortReverse } = this.state;
+    const { list, query, finalQuery, error, loading } = this.state;
     return (
       <div className="App">
         <br />
@@ -155,15 +141,7 @@ class App extends Component {
         </SearchField>
 
         {error && <p>Oops! Something went wrong.</p>}
-        {list && list[finalQuery] && 
-          <NewsList 
-            list={list[finalQuery].hits} 
-            deleteFunc={this.onDelete} 
-            sortKey={sortKey}
-            onSort={this.onSort}
-            isSortReverse={isSortReverse}
-          />
-        }
+        {list && list[finalQuery] && <NewsList list={list[finalQuery].hits} deleteFunc={this.onDelete} />}
         <ButtonWithLoading loading={loading} semantic="green" onClick={this.loadNextPage}>More!</ButtonWithLoading>
         <br />
         <br />
