@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 
 const NewsItem = ({ title, url, author, num_comments, points, deleteFunc, objectID }) =>
   <tr>
-    <td><a href={url} target="_blank">{title}</a></td> 
+    <td><strong><a href={url} target="_blank">{title}</a></strong></td> 
     <td>{author}</td>
     <td>{num_comments}</td>
     <td>{points}</td>

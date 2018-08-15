@@ -9,7 +9,7 @@ exports[`App has a valid snapshot 1`] = `
     className="ui header"
   >
     <i
-      className="plug icon"
+      className="user secret icon huge"
     />
     <div
       className="content"

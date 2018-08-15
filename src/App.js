@@ -130,7 +130,7 @@ class App extends Component {
       <div className="App">
         <br />
         <h1 className="ui header">
-          <i className="plug icon"></i>
+          <i className="user secret icon huge"></i>
           <div className="content">
             Hacker News Redux
             <div className="sub header">Remade using React</div>
