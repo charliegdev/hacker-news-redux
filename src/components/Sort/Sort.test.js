@@ -8,8 +8,14 @@ import Sort from "./Sort";
 Enzyme.configure({ adapter: new Adapter() });
 
 describe("Sort", () => {
-
-  const sort = <Sort onSort={() => console.log("test")} sortKey="none" />;
+  const sort = (
+    <Sort
+      onSort={() => console.log("test")}
+      sortKey="none"
+      isSortReverse={false}
+      activeSortKey="none"
+    />
+  );
   it("renders without crashing", () => {
     const div = document.createElement("div");
     ReactDOM.render(sort, div);

@@ -8,7 +8,7 @@ import Sort from "../Sort/Sort";
 const withLoading = Component => ({ loading, ...rest }) => 
   loading ? <Loading /> : (<div><Component { ...rest } /><br /></div>)
 
-const withSort = onSort => ({ sortKey, children }) =>
-  <Sort sortKey={sortKey} onSort={onSort}>{children}</Sort>
+const withSort = (onSort, activeSortKey, isSortReverse) => ({ sortKey, children }) =>
+  <Sort sortKey={sortKey} activeSortKey={activeSortKey} isSortReverse={isSortReverse} onSort={onSort}>{children}</Sort>
 
 export { withLoading, withSort };

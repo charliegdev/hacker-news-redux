@@ -16,7 +16,8 @@ describe("NewsList", () => {
     ],
     deleteFunc: mockFunc,
     sortKey: "none",
-    onSort: mockFunc
+    onSort: mockFunc,
+    isSortReverse: false
   }
 
   const newsList = <NewsList {...props} />;
@@ -34,6 +35,6 @@ describe("NewsList", () => {
 
   it("shows 2 items", () => {
     const element = render(newsList); // can't use shallow because I need child components to be rendered
-    expect(element.find(".btn-outline-danger")).toHaveLength(2);
+    expect(element.find(".red")).toHaveLength(2);
   });
 });
