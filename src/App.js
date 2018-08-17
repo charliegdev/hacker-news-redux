@@ -27,19 +27,21 @@ class App extends Component {
   }
 
   onDelete(objectID) {
-    const { list, finalQuery } = this.state;
-    const { hits, page } = list[finalQuery];
+    this.setState(prevState => {
+      const { list, finalQuery } = prevState;
+      const { hits, page } = list[finalQuery];
 
-    const remainingHits = hits.filter(item => item.objectID !== objectID);
+      const remainingHits = hits.filter(item => item.objectID !== objectID);
 
-    this.setState({
-      list: {
-        ...list,
-        [finalQuery]: {
-          hits: remainingHits,
-          page
+      return {
+        list: {
+          ...list,
+          [finalQuery]: {
+            hits: remainingHits,
+            page
+          }
         }
-      }
+      };
     });
   }
 
