@@ -1,5 +1,5 @@
 # Hacker News Redux
-This is a remake of [Hacker News](https://news.ycombinator.com/) made in React, to change it to a front-end single-page application, infused with a much more modern look.
+This is a remake of [Hacker News](https://news.ycombinator.com/) in React to upgrade it to a front-end single-page application, infused with a much more modern look.
 
 ![UI](screenshot.png)
 
