@@ -1,6 +1,8 @@
 # Hacker News Redux
 This is a remake of [Hacker News](https://news.ycombinator.com/) in React to upgrade it to a front-end single-page application, infused with a much more modern look.
 
+View it live on [Heroku](https://glacial-spire-79596.herokuapp.com/).
+
 ![UI](screenshot.png)
 
 # Build & Run

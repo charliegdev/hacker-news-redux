@@ -129,7 +129,9 @@ class App extends Component {
           <i className="user secret icon huge"></i>
           <div className="content">
             Hacker News Redux
-            <div className="sub header">Remade using React</div>
+            <div className="sub header">Remade using React. View the source code on&nbsp;
+              <a href="https://github.com/charliegdev/hacker-news-redux">GitHub</a>.
+            </div>
           </div>
         </h1>
         <br />
